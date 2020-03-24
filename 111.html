@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.content{
+			width: 200px;
+			height: 200px;
+			background: #ccc;
+/*			margin: auto;
+			display: flex;
+			justify-content: center;
+			align-items: center;*/
+		}
+		.box{
+			width: 500px;
+			height: 250px;
+			margin: auto;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		myHero{
+    		display: block;
+    		background-color: #aaa;
+    		padding: 50px;
+    		font-size: 30px;
+		}
+		    
+		.wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #eaeaea;
+        height: 500px;
+
+    }
+    .inner {
+        text-align: center;
+        background: blue;
+        color: #fff;
+/*        display: flex;
+        align-items: center;
+        justify-content: center;
+*/
+        padding: 25% 0;
+        height:0;
+
+    }
+
+ #left {
+            background-color: green;
+            float: left;
+            width: 220px;
+            margin:100px 0;
+        }
+        
+        #content {
+            float: left;
+            width: 100%;
+        }
+        
+        #contentInner {
+            margin-left: 220px;/*==等于左边栏宽度值==*/
+            background-color: orange;
+        }
+      .one{
+      width:200px;
+      height:50px;
+      background-color:rgb(0,255,0);
+      margin:20px;
+/*      position: relative;*/
+      }
+      .one-th{
+      width:100px;
+      height:20px;
+      background-color:rgb(0,0,255);
+      margin:20px;
+      border:1px solid #333;
+      }
+      .two{
+      width:200px;
+      height:50px;
+      background-color:rgb(255,0,0);
+      margin:20px;
+	  display: inline-block;
+      }
+
+      #status {
+  position: fixed;
+  width: 100%;
+  font: bold 1em sans-serif;
+  color: #FFF;
+  padding: 0.5em;
+}
+
+#log {
+  padding: 2.5em 0.5em 0.5em;
+  font: 1em sans-serif;
+}
+
+.online {
+  background: green;
+}
+
+.offline {
+  background: red;
+}
+
+.aaa{
+  width: 70%;  
+  position:relative;                    
+            }
+/*.aaa:before{
+  content: '##';
+  padding-top: 100%;
+  box-sizing: border-box;   
+  display: block;
+  width: 0;           
+}*/
+.inaaa{
+  padding-top: 100%;
+}
+
+	</style>
+</head>
+<body>
+
+
+<div class="aaa">
+  <div class="inaaa"></div>
+</div>
+
+	 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+   <div id="status"></div>
+<div id="log"></div>
+<p>This is a test</p>
+
+<div class="one"></div>
+<div class="two"></div>
+
+<div id="left">Left Sidebar</div>
+        <div id="content">
+            <div id="contentInner">
+                Main Content
+            </div>
+        </div>
+<div class="inner"> A </div>
+
+<div class="box" style="background: black;">
+	<div class="content" style="background: red;"></div>
+</div>
+
+<myHero>我的第一个新元素</myHero>
+
+
+<div id="app">
+    <!--绑定属性-->
+    <img v-bind:src="imgSrc" alt="">
+    <!--简写-->
+    <img :src="imgSrc" alt="">
+
+    <!--class绑定 : 绑定的是字符串的类名-->
+    <h2 :class="'red'">class绑定</h2>
+    <h2 :class="['red', 'pink']">class绑定</h2>
+    <h2 :class="red">不写引号class绑定,去vm实例中找</h2>
+
+    <h2 :class="{red : flag, pink:true}">以对象的方式去写,通过布尔值判定,key是style里面的类名</h2>
+
+    <!--三元表达式: 当flag为true,就有red样式, 否则有pink样式-->
+    <h2 :class="[flag?red:pink]">三元表达式</h2>
+
+
+</div>
+
+<script>
+function a(name){
+  console.log(name)
+  return this.name = name;
+}
+console.log([0 , "0" , [] , {} , null].map(i => typeof new a(i).name));
+
+if(true){
+  console.log(typeof {})
+}
+console.log("==================================");
+
+let c = function(){}
+c.prototype = Object.create({
+  option : {
+    name : 'c'
+  }
+})
+let c1 = new c();
+let c2 = new c();
+c1.option.name = 'new_c';
+console.log(c2.option.name);
+c.option = null;
+console.log(c2.option.name)
+
+console.log("==================================");
+
+(function(){
+  for(var i = 0 ; i<5 ; i++){
+    setTimeout(console.log , i , i);
+  }
+}())
+
+setTimeout(console.log , 2 , 3);
+
+
+window.addEventListener('load', function() {
+  var status = document.getElementById("status");
+  var log = document.getElementById("log");
+
+  function updateOnlineStatus(event) {
+    var condition = navigator.onLine ? "online" : "offline";
+
+    status.className = condition;
+    status.innerHTML = condition.toUpperCase();
+
+    log.insertAdjacentHTML("beforeend", "Event: " + event.type + "; Status: " + condition);
+  }
+
+  window.addEventListener('online',  updateOnlineStatus);
+  window.addEventListener('offline', updateOnlineStatus);
+});
+
+</script>
+
+
+
+</body>
+</html>
